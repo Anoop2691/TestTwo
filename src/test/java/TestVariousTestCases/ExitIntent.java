@@ -31,7 +31,7 @@ public class ExitIntent {
 		    //robot.mouseMove(0,600);
 		    Thread.sleep(3000);
 		getModalTitle=driver.findElement(By.className("modal-title")).getText().toUpperCase();
-		Assert.assertEquals("THIS IS A MODAL WINDOW", getModalTitle,"Assertion failed: verified that modal window is not displayed");
+		Assert.assertEquals("Assertion failed:verified that modal window is not displayed","THIS IS A MODAL WINDOW", getModalTitle);
 		Reporter.log("Assertion passed:verified that modal window is displayed",true);
 	}
 	public void checkClosingOfModalWindow() {
