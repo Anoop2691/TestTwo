@@ -3,79 +3,65 @@ package TestVariousTestCases;
 import java.awt.AWTException;
 import java.io.IOException;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class PageTest {
-  WebDriver driver;
-  BasicAuthentication ba;
-  ExitIntent ei;
-  Tables t;
-  ValidateImage vi;
-  LoginPageValidation lpv;
-  HoverPage hp;
-  StatusCode sc;
-  WYSIWYGEditor ed;
-  @BeforeClass
+  AccessPageObjects test;
+  @BeforeMethod
   public void openLink() {
-	  driver=new ChromeDriver();
-	  driver.get("http://10.0.31.161:9292/");
-	  ba=new BasicAuthentication(driver);
-	  ei=new ExitIntent(driver);
-	  t=new Tables(driver);
-	  vi=new ValidateImage(driver);
-	  lpv=new LoginPageValidation(driver);
-	  hp=new HoverPage(driver);
-	  sc=new StatusCode(driver);
-	  ed=new WYSIWYGEditor(driver);
+	  test=new AccessPageObjects();
+	  test.openLinkAndCreateObjects();
   }
-  @AfterMethod
-  void openLinkEveryTime() {
-	  driver.get("http://10.0.31.161:9292/");
-  }
- // @Test
+  
+
+  @Test
   void checkPresenceOfPromptWindow() {
-	  ba.clickOnBasicAuth();
+	  test.ba.clickOnBasicAuth();
   }
   @Test
   void checkExitContent() throws AWTException, InterruptedException {
-	  ei.exitIntentPageAssert();
-	  ei.checkForModalBox();
-	  ei.checkClosingOfModalWindow();
+	  test.ei.exitIntentPageAssert();
+	  test.ei.checkForModalBox();
+	  test.ei.checkClosingOfModalWindow();
   }
   @Test
   void checkTable() {
-	  t.verifyDataTablePresent();
-	  t.verifyDataTableSorted();
+	  test.t.verifyDataTablePresent();
+	  test.t.verifyDataTableSorted();
   }
   @Test
   public void validateImage() throws InterruptedException {
-		vi.validateInvalidImages();
+	  test.vi.validateInvalidImages();
 
 	}
   @Test
   public void loginPageInvalidCredentials() {
-	  lpv.PageIsDisplayed();
-	  lpv.validateWithInvalidCredentials();
-	  lpv.validateWithValidCredentials();
+	  test.lpv.PageIsDisplayed();
+	  test.lpv.validateWithInvalidCredentials();
+	  test.lpv.validateWithValidCredentials();
   }
   @Test
-  public void checkForHoverPage() throws AWTException {
-	  hp.checkWhetherPageDisplayed();
-	  hp.checkBeforeHoveringAndAfterHovering();
+  public void checkForHoverPage() throws AWTException, InterruptedException {
+	  test. hp.checkWhetherPageDisplayed();
+	  test. hp.checkBeforeHoveringAndAfterHovering();
   }
   @Test
   public void checkForStatusCodes() throws IOException {
-	  sc.verifyPageIsDisplayed();
-	  sc.clickOnLink404();
-	  sc.check404StatusCode();
+	  test.sc.verifyPageIsDisplayed();
+	  test.sc.clickOnLink404();
+	  test. sc.check404StatusCode();
   }
   @Test
   public void checkWYSIWYGEditor() {
-	  ed.checkPageIsDisplayed();
-	  ed.editEditor();
+	  test.ed.checkPageIsDisplayed();
+	  test.ed.editEditor();
+  }
+  
+  @AfterMethod
+  void closeBrowser() {
+	  test.driver.close();
   }
 }

@@ -10,6 +10,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
+
+import junit.framework.Assert;
 
 public class ValidateImage {
 	WebDriver driver;
@@ -22,7 +25,8 @@ public class ValidateImage {
 public void validateInvalidImages() {
 	driver.get("http://10.0.31.161:9292/");
 		driver.findElement(By.linkText("Broken Images")).click();
-		
+		Assert.assertEquals("Broken Images",driver.findElement(By.xpath("//div[@id='content']/div/h3")).getText());
+		Reporter.log("Clicked on 'Broken Images' and verified that page is displayed",true);
 		try {
 			 invalidImageCount = 0;
 			List<WebElement> imagesList = driver.findElements(By.tagName("img"));
